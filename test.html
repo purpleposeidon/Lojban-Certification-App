@@ -1,0 +1,130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head> 
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" /> 
+  <title>Lojban Test</title>
+  <style type="text/css"> 
+    .answers li { 
+      list-style-type: lower-alpha; 
+      padding-right: 0px;
+    } 
+
+    label { 
+      cursor: pointer;
+    }
+    .question > label {
+      text-decoration: underline; 
+    }
+    .comment {
+      display: none;
+    }
+    input[type="radio"] {
+      position: relative;
+      /*left: -.5em;*/
+    }
+    h1 {
+      margin-top: 3em;
+    }
+    h1:first-child {
+      margin-top: 1em;
+    }
+    h2 {
+      font-size: large;
+      margin-top: 2em;
+      margin-left: 1em;
+    }
+    p {
+      margin-left: 5em;
+    }
+    ol.testquestions {
+      margin-left: 2em;
+    }
+    ol.testquestions > li {
+      margin-top: .5em;
+    }
+  </style> 
+</head>
+<body>
+
+<h1>Lojban Vocabulary</h1>
+<p>This part tests your vocabulary.</p>
+<h2>Translate the number</h2>
+<ol class="testquestions">
+<li class="question">BEEFB1B (hexadecimal)
+    <ol class="answers">
+        <li class="wrong"><input type="radio" name="q1" id="q1a1"/> <label for="q1a1">li recicivosomucireci</label><div class="comment">No! What is it in hexadecimal?</div></li>
+        <li class="correct"><input type="radio" name="q1" id="q1a2"/> <label for="q1a2">li feireireivaifeipafei</label></li>
+        <li class="wrong"><input type="radio" name="q1" id="q1a3"/> <label for="q1a3">la .bifbib</label></li>
+        <li class="wrong"><input type="radio" name="q1" id="q1a4"/> <label for="q1a4">na namcu</label><div class="comment">It is a number in base 16.</div></li>
+    </ol>
+</li>
+<li class="question">23
+    <ol class="answers">
+        <li class="wrong"><input type="radio" name="q2" id="q2a1"/> <label for="q2a1">li soci</label></li>
+        <li class="correct"><input type="radio" name="q2" id="q2a2"/> <label for="q2a2">li reci</label></li>
+        <li class="wrong"><input type="radio" name="q2" id="q2a3"/> <label for="q2a3">li pano</label></li>
+        <li class="wrong"><input type="radio" name="q2" id="q2a4"/> <label for="q2a4">la tutri</label></li>
+    </ol>
+</li>
+</ol>
+<h2>Pick the definition for the gismu</h2>
+<ol class="testquestions">
+<li class="question">broda
+    <ol class="answers">
+        <li class="wrong"><input type="radio" name="q3" id="q3a1"/> <label for="q3a1">walk</label></li>
+        <li class="wrong"><input type="radio" name="q3" id="q3a2"/> <label for="q3a2">read</label></li>
+        <li class="correct"><input type="radio" name="q3" id="q3a3"/> <label for="q3a3">gismu variable</label></li>
+        <li class="wrong"><input type="radio" name="q3" id="q3a4"/> <label for="q3a4">sleep</label></li>
+    </ol>
+</li>
+<li class="question">cusku
+    <ol class="answers">
+        <li class="wrong"><input type="radio" name="q4" id="q4a1"/> <label for="q4a1">walk</label></li>
+        <li class="correct"><input type="radio" name="q4" id="q4a2"/> <label for="q4a2">express</label></li>
+        <li class="wrong"><input type="radio" name="q4" id="q4a3"/> <label for="q4a3">greet</label></li>
+    </ol>
+</li>
+</ol>
+<h1>Lojban Grammar</h1>
+<p>This part tests your knowledge of Lojban grammar</p>
+<h2>Pick the correct terminator</h2>
+<ol class="testquestions">
+<li class="question">lo broda ____ barda
+    <ol class="answers">
+        <li class="wrong"><input type="radio" name="q5" id="q5a1"/> <label for="q5a1">fa'o</label></li>
+        <li class="wrong"><input type="radio" name="q5" id="q5a2"/> <label for="q5a2">vau</label></li>
+        <li class="correct"><input type="radio" name="q5" id="q5a3"/> <label for="q5a3">ku</label></li>
+        <li class="wrong"><input type="radio" name="q5" id="q5a4"/> <label for="q5a4">kei</label></li>
+    </ol>
+</li>
+<li class="question">viska fa lo mamta be la timos ____ lo mi patfu
+    <ol class="answers">
+        <li class="wrong"><input type="radio" name="q6" id="q6a1"/> <label for="q6a1">va'o</label></li>
+        <li class="wrong"><input type="radio" name="q6" id="q6a2"/> <label for="q6a2">vau</label></li>
+        <li class="wrong"><input type="radio" name="q6" id="q6a3"/> <label for="q6a3">.i</label></li>
+        <li class="correct"><input type="radio" name="q6" id="q6a4"/> <label for="q6a4">ku</label></li>
+    </ol>
+</li>
+</ol>
+<h2>Which terminator is unnecessary?</h2>
+<p>(You can click on the underlined portion to give your answer)</p>
+<ol class="testquestions">
+<li class="question">lo mlatu be lo do <label for="q7a1">mamta</label> <label for="q7a2">cu</label> barda <label for="q7a3">vau</label>
+    <ol>
+        <li class="wrong"><input type="radio" name="q7" id="q7a1" /><label for="q7a1">mamta</label><div class="comment">that's not a terminator!</div></li>
+        <li class="wrong"><input type="radio" name="q7" id="q7a2" /><label for="q7a2">cu</label><div class="comment">very necessary</div></li>
+        <li class="correct"><input type="radio" name="q7" id="q7a3" /><label for="q7a3">vau</label><div class="comment">And we all know why!</div></li>
+    </ol>
+    </li>
+<li class="question">se nu lo prenu <label for="q8a1">ku</label> lo rokci be mi <label for="q8a2">be'o</label> na du <label for="q8a3">kei</label> ta
+    <ol>
+        <li class="correct"><input type="radio" name="q8" id="q8a1" /><label for="q8a1">ku</label></li>
+        <li class="wrong"><input type="radio" name="q8" id="q8a2" /><label for="q8a2">be'o</label></li>
+        <li class="wrong"><input type="radio" name="q8" id="q8a3" /><label for="q8a3">kei</label></li>
+    </ol>
+    </li>
+
+</ol>
+
+</body>
+</html>
