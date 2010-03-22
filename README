@@ -71,4 +71,4 @@ pick-the-bad-value:
 
   Answers are put inside pairs of either +'s or *'s. A remark can be included by putting it after a colon.
 
-remarks presently do nothing! Oh well.
+A remark is shown when the answer is chosen.
