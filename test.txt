@@ -58,5 +58,5 @@ QUESTION: viska fa lo mamta be la timos __ lo mi patfu
 GROUP: Which terminator is unnecessary?
   (You can click on the underlined portion to give your answer)
 QUESTION: lo mlatu be lo do +mamta:that's not a terminator!+ +cu:very necessary+ barda *vau:And we all know why!*
-QUESTION: se nu lo prenu *ku* lo rokci be mi +be'o+ na du +kei+ ta
+QUESTION: se nu lo prenu *ku:right!* lo rokci be mi +be'o:asdf+ na du +keie:eh?+ ta
 //QUESTION: doi lo pendo be lo tarci +do'u+ xamgu nuzba +.i:not a terminator!+

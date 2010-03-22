@@ -1,4 +1,4 @@
 
 
 all:
-	./build.py test.ml > test.html
+	./build.py test.txt > test.html

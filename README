@@ -3,4 +3,72 @@ MEANT-FOR-LOJBAN-SPECIFICALLY-BUT-COULD-BE-USED-FOR-LOTS-OF-OTHER-THINGS TEST CR
 Usage:
     build.py file1 file2 file3...
 
-Format of input...
+
+FILE FORMAT
+===========
+In general, a file is formatted kinda like
+
+  COMMAND: PRIVAL
+    Arg1
+    Arg2
+    ArgN
+
+
+The rest of this document will list the different commands.
+Comments can be put into the file using '//'
+
+
+SET
+---
+Defines a variable.
+  SET: VARNAME the variable's value
+
+An important variable is TITLE, as it sets the title of the HTML output. In the lines following a variable's definition, it is replaced. In other words, a variable will only be substituted for its' value after it has been defined. Another pre-defined variable is DATE.
+
+Variables aren't handled with any kind of intelligence; they can't be used as escapes or anything.
+
+SECTION
+-------
+Creates a big section. The PRIVAL following it goes into a big header. You might use it to separate big sections, like Vocab, Mathematics, and Grammar.
+
+  SECTION: Title
+    Additional
+    Following
+    Paragraphs
+
+The following paragraphs are optional
+
+GROUP
+-----
+Just like SECTION, except it uses <h2> instead of <h1>. Use it for a series of questions that have the same instructions. It's like..
+
+  SECTION: Title
+    Directions for the following question
+
+You might also use a SECTION for reading comprehension questions.
+
+QUESTION
+--------
+The important one, ya? QUESTION can be in two formats: 'fill-in-the-blank' or 'pick-the-bad-value'. There are two kinds of answers to questions, right ones, and wrong ones. The right answer(s) are indicated with '*', and the wrong answers are indicated with '+'.
+fill-in-the-blank questions:
+
+
+    QUESTION: ___ is the approximate value of pi
+      * 3.14
+      * 3.141592
+      + 8
+      + yuhm
+        Yes, pie is delicious. Mmm, pie...
+      + 4/10
+      + -3i
+
+  If more than one correct answer is given for a fill-in-the-blank, then only one is included as an option. The order of the answers is randomized. The item on a new line following the question is a remark, shown when that answer is picked.
+
+pick-the-bad-value:
+
+    //Suppose the instructions are, 'pick the most derogatory adjective'
+    QUESTION: +bob:bob is a name+ is not a +good+ person, bob is a *bad* person
+
+  Answers are put inside pairs of either +'s or *'s. A remark can be included by putting it after a colon.
+
+remarks presently do nothing! Oh well.

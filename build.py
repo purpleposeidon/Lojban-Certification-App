@@ -6,6 +6,7 @@ import sys
 import io
 import cgi
 import random
+import time
 
 def section(buff):
   head, value = buff.next().split(':', 1)
@@ -58,7 +59,7 @@ class Option:
   def format(self, q_count, a_count):
     if self.correct: style = 'correct'
     else: style = "wrong"
-    if self.comment: comment = "<div class=\"comment\">{0}</div>".format(self.comment)
+    if self.comment: comment = "<span class=\"remark\">{0}</span>".format(self.comment)
     else: comment = ''
     return "\t\t<li class=\"{2}\"><input type=\"radio\" name=\"q{0}\" id=\"q{0}a{1}\"/> <label for=\"q{0}a{1}\">{3}</label>{4}</li>".format(q_count, a_count, style, self.value, comment)
 
@@ -132,7 +133,7 @@ def question(buff):
       a_count += 1
       if correct: style = "correct"
       else: style = "wrong"
-      if comment: comment = "<div class=\"comment\">{0}</div>".format(comment)
+      if comment: comment = "<span class=\"remark\">{0}</span>".format(comment)
       else: comment = ''
       buff.write("\t\t<li class=\"{0}\"><input type=\"radio\" name=\"q{1}\" id=\"q{1}a{2}\" /><label for=\"q{1}a{2}\">{3}</label>{4}</li>".format(style, QCOUNT, a_count, option, comment))
     buff.write("\t</ol>")
@@ -164,7 +165,7 @@ class Buffer:
     self.lines = []
     self.index = -1
     self.stdout = io.StringIO('')
-    self.variables = {'TITLE':"Lojban Test"}
+    self.variables = {'TITLE':"Lojban Test", 'DATE': time.asctime()}
   def write(self, val):
     self.stdout.write(unicode(val).replace('\t', ' '*4)+'\n')
   def next(self):
@@ -225,8 +226,17 @@ label {
 .question > label {
   text-decoration: underline; 
 }
-.comment {
+.remark {
   display: none;
+}
+.shownremark {
+  background-color: white;
+  border: 2px solid black;
+  color: black;
+  position: relative;
+  top: 7px;
+  left: 3em;
+  padding: 2px;
 }
 input[type="radio"] {
   position: relative;
@@ -297,6 +307,7 @@ function grade() {
       var right_answer = false;
       n -= 1;
       var style = answers[n].style;
+      
       if (answers[n].getElementsByTagName("input")[0].checked) {
         if (answers[n].className == "correct") {
           style.color = "green"
@@ -311,8 +322,16 @@ function grade() {
         }
         style.fontWeight = "bold";
         marked = true;
+        var remark = answers[n].getElementsByClassName("remark");
+        if (remark.length) {
+          remark[0].className = "shownremark"
+        }
       }
       else {
+        var remark = answers[n].getElementsByClassName("shownremark");
+        if (remark.length) {
+          remark[0].className = "remark"
+        }
         style.color = "";
         style.fontWeight = "";
         if (answers[n] != correct_answer) {
