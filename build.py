@@ -1,73 +1,11 @@
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 
 import sys
 import io
 import cgi
 import random
-
-
-sample = io.StringIO("""
-SECTION: Lojban Vocabulary
-  This part tests your vocabulary.
-GROUP: Translate the number
-QUESTION: BEEFB1B (hexadecimal)
-  * li feireireivaifeipafei //Uh, probably not really correct, probably needs a base...
-  + li recicivosomucireci
-      No! What is it in hexadecimal?
-  + na namcu
-      It is a number in base 16.
-  + lo broda
-  + la .bifbib
-QUESTION: 23
-  * li reci
-  + li soci
-  + reci
-  + li pano
-  + la tutri
-  + 23
-
-GROUP: Pick the definition for the gismu
-QUESTION: broda
-  * gismu variable
-  * anything
-  + run
-  + walk
-  + go
-  + sleep
-  + talk
-  + read
-QUESTION: cusku
-  * say
-  * express
-  + walk
-  + greet
-
-
-SECTION: Lojban Grammar
-  This part tests your knowledge of Lojban grammar
-GROUP: Pick the correct terminator
-QUESTION: lo broda __ barda
-  * cu
-  * ku
-  + be'o
-  + kei
-  + vau
-  + fa'o
-QUESTION: viska fa lo mamta be la timos __ lo mi patfu 
-  * be'o
-  * ku
-  + kei
-  + va'o
-  + dau
-  + vau
-  + .i
-GROUP: Which terminator is unnecessary?
-  (You can click on the underlined portion to give your answer)
-QUESTION: lo mlatu be lo do +mamta:that's not a terminator!+ +cu:very necessary+ barda *vau:And we all know why!*
-QUESTION: se nu lo prenu *ku* lo rokci be mi +be'o+ na du +kei+ ta
-//QUESTION: doi lo pendo be lo tarci +do'u+ xamgu nuzba +.i:not a terminator!+
-""")
 
 def section(buff):
   head, value = buff.next().split(':', 1)
@@ -237,11 +175,12 @@ class Buffer:
       if '//' in l:
         #Strip out comments
         l = l[:l.index('//')]
-      if ':' in l and l.split(':')[0].upper() == 'SET':
+      if ':' in l and (l.split(':')[0].upper() == 'SET'):
         #SET:VARIABLENAME whatever value
         v = l.split(':', 1)[1]
-        var, val = v.split(' ', 0)
+        var, val = v.strip().split(' ', 1)
         self.variables[var] = val.strip()
+        #sys.stderr.write(' '.join(['set', var, 'to', val])+'\n')
         continue
       for key, val in self.variables.items():
         l = l.replace(key, val)
@@ -257,8 +196,7 @@ class Buffer:
   def back(self):
     self.index -= 1
 
-def main():
-  fd = sample
+def main(fd):
   buff = Buffer(fd)
   while 1:
     try:
@@ -276,54 +214,155 @@ def main():
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" /> 
   <title>%s</title>
   <style type="text/css"> 
-    .answers li { 
-      list-style-type: lower-alpha; 
-      padding-right: 0px;
-    } 
+.answers li { 
+  list-style-type: lower-alpha; 
+  padding-right: 0px;
+} 
 
-    label { 
-      cursor: pointer;
-    }
-    .question > label {
-      text-decoration: underline; 
-    }
-    .comment {
-      display: none;
-    }
-    input[type="radio"] {
-      position: relative;
-      /*left: -.5em;*/
-    }
-    h1 {
-      margin-top: 3em;
-    }
-    h1:first-child {
-      margin-top: 1em;
-    }
-    h2 {
-      font-size: large;
-      margin-top: 2em;
-      margin-left: 1em;
-    }
-    p {
-      margin-left: 5em;
-    }
-    ol.testquestions {
-      margin-left: 2em;
-    }
-    ol.testquestions > li {
-      margin-top: .5em;
-    }
+label { 
+  cursor: pointer;
+}
+.question > label {
+  text-decoration: underline; 
+}
+.comment {
+  display: none;
+}
+input[type="radio"] {
+  position: relative;
+  /*left: -.5em;*/
+}
+h1 {
+  margin-top: 3em;
+}
+h1:first-child {
+  margin-top: 1em;
+}
+h2 {
+  font-size: large;
+  margin-top: 2em;
+  margin-left: 1em;
+}
+p {
+  margin-left: 5em;
+}
+ol.testquestions {
+  margin-left: 2em;
+}
+ol.testquestions > li {
+  margin-top: .5em;
+}
+.good {
+  border-color: rgb(0, 127, 0);
+  border-width: thick;
+  border-style: solid;
+}
+.bad {
+  border-color: rgb(127, 0, 0);
+  border-width: thick;
+  border-style: solid;
+}
   </style> 
+  <script type="text/javascript">
+/* <![CDATA[ */
+function grade() {
+  var sa = document.getElementById("sa").checked;
+  var i, inputs;
+  questions = document.getElementsByClassName("question");
+  var total = questions.length;
+  var right = 0;
+  var unmarked = 0;
+  i = total;
+  
+  //For each question...
+  while (i) {
+    i -= 1;
+    
+    var answers = questions[i].getElementsByTagName("li");
+    var n = answers.length;
+    var marked = false;
+    
+    // Show the correct item
+    var correct_answer = questions[i].getElementsByClassName("correct")[0];
+    if (sa) {
+      correct_answer.style.backgroundColor = "pink";
+    }
+    else {
+      correct_answer.style.backgroundColor = "";
+    }
+
+    
+    //For each answer...
+    while (n) {
+      var right_answer = false;
+      n -= 1;
+      var style = answers[n].style;
+      if (answers[n].getElementsByTagName("input")[0].checked) {
+        if (answers[n].className == "correct") {
+          style.color = "green"
+          style.backgroundColor = "";
+          right += 1;
+          right_answer = true;
+          //correct_answer.style.backgroundColor = "";
+        }
+        else {
+          style.color = "red";
+          style.backgroundColor = "black";
+        }
+        style.fontWeight = "bold";
+        marked = true;
+      }
+      else {
+        style.color = "";
+        style.fontWeight = "";
+        if (answers[n] != correct_answer) {
+          style.backgroundColor = "";
+        }
+      }
+    }
+    
+    //Didn't answer the question
+    if (!marked) {
+      questions[i].style.backgroundColor = "yellow";
+      unmarked += 1;
+    }
+    else {
+      questions[i].style.backgroundColor = "";
+    }
+  }
+  // Show the peep's score
+  var score;
+  score = right + "/" + total;
+  if (unmarked) {
+    score += " (" + unmarked + " unmarked)"
+  }
+  document.getElementById("results").innerHTML = score
+}
+
+/* ]]> */
+  </script>
 </head>
 <body>
 %s
 %s
 </ol>
 %s
+<div>
+  <input type="button" onclick="grade();" value="Grade" /> <label for="sa"><input type="checkbox" id="sa" />Show correct answers</label>
+  <br/>
+  <span>Your score: <b id="results">Ungraded</b></span>
+</div>
 </body>
 </html>""" % (buff.variables.get('TITLE', 'Lojban Test'), buff.variables.get("HEADER", ''), buff.stdout.read(), buff.variables.get("FOOTER", '')))
 
 if __name__ == '__main__':
-  r = main()
-  raise SystemExit(r)
+  if len(sys.argv) == 1:
+    sys.stderr.write("""Usage:
+    build.py file1 file2 file3...
+""")
+    raise SystemExit(-1)
+  for file_name in sys.argv[1:]:
+    r = main(open(file_name, 'r'))
+    if not r:
+      raise SystemExit(r)
+  raise SystemExit(0)

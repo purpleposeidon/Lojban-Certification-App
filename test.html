@@ -2,67 +2,155 @@
 <html xmlns="http://www.w3.org/1999/xhtml"> 
 <head> 
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" /> 
-  <title>Lojban Test</title>
+  <title>Custom title!</title>
   <style type="text/css"> 
-    .answers li { 
-      list-style-type: lower-alpha; 
-      padding-right: 0px;
-    } 
+.answers li { 
+  list-style-type: lower-alpha; 
+  padding-right: 0px;
+} 
 
-    label { 
-      cursor: pointer;
-    }
-    .question > label {
-      text-decoration: underline; 
-    }
-    .comment {
-      display: none;
-    }
-    input[type="radio"] {
-      position: relative;
-      /*left: -.5em;*/
-    }
-    h1 {
-      margin-top: 3em;
-    }
-    h1:first-child {
-      margin-top: 1em;
-    }
-    h2 {
-      font-size: large;
-      margin-top: 2em;
-      margin-left: 1em;
-    }
-    p {
-      margin-left: 5em;
-    }
-    ol.testquestions {
-      margin-left: 2em;
-    }
-    ol.testquestions > li {
-      margin-top: .5em;
-    }
+label { 
+  cursor: pointer;
+}
+.question > label {
+  text-decoration: underline; 
+}
+.comment {
+  display: none;
+}
+input[type="radio"] {
+  position: relative;
+  /*left: -.5em;*/
+}
+h1 {
+  margin-top: 3em;
+}
+h1:first-child {
+  margin-top: 1em;
+}
+h2 {
+  font-size: large;
+  margin-top: 2em;
+  margin-left: 1em;
+}
+p {
+  margin-left: 5em;
+}
+ol.testquestions {
+  margin-left: 2em;
+}
+ol.testquestions > li {
+  margin-top: .5em;
+}
+.good {
+  border-color: rgb(0, 127, 0);
+  border-width: thick;
+  border-style: solid;
+}
+.bad {
+  border-color: rgb(127, 0, 0);
+  border-width: thick;
+  border-style: solid;
+}
   </style> 
+  <script type="text/javascript">
+/* <![CDATA[ */
+function grade() {
+  var sa = document.getElementById("sa").checked;
+  var i, inputs;
+  questions = document.getElementsByClassName("question");
+  var total = questions.length;
+  var right = 0;
+  var unmarked = 0;
+  i = total;
+  
+  
+  while (i) {
+    i -= 1;
+    
+    
+    var answers = questions[i].getElementsByTagName("li");
+    var n = answers.length;
+    var correct_answer = questions[i].getElementsByClassName("correct")[0];
+    if (sa) {
+      correct_answer.style.backgroundColor = "pink";
+    }
+    else {
+      correct_answer.style.backgroundColor = "";
+    }
+    
+    // Now, mark the chosen item
+    var marked = false;
+    
+    while (n) {
+      var right_answer = false;
+      n -= 1;
+      var style = answers[n].style;
+      if (answers[n].getElementsByTagName("input")[0].checked) {
+        if (answers[n].className == "correct") {
+          style.color = "green"
+          style.backgroundColor = "";
+          right += 1;
+          right_answer = true;
+          //correct_answer.style.backgroundColor = "";
+        }
+        else {
+          style.color = "red";
+          style.backgroundColor = "black";
+        }
+        style.fontWeight = "bold";
+        marked = true;
+      }
+      else {
+        
+        style.color = "";
+        style.fontWeight = "";
+        if (answers[n] != correct_answer) {
+          style.backgroundColor = "";
+        }
+      }
+    }
+    if (!marked) {
+      questions[i].style.backgroundColor = "yellow";
+      unmarked += 1;
+    }
+    else {
+      questions[i].style.backgroundColor = "";
+    }
+    
+ 
+  }
+  var score;
+  score = right + "/" + total;
+  if (unmarked) {
+    score += " (" + unmarked + " unmarked)"
+  }
+  document.getElementById("results").innerHTML = score
+}
+
+/* ]]> */
+  </script>
 </head>
 <body>
 
 <h1>Lojban Vocabulary</h1>
 <p>This part tests your vocabulary.</p>
+<p>The title of this document is "Custom title!". The foo variable, which was just defined, is actually written, uh, F O O, but without the spaces. It can't be escaped, it'd take too much effort to setup. But anyways, its value is 'barrrr', alright?</p>
 <h2>Translate the number</h2>
 <ol class="testquestions">
 <li class="question">BEEFB1B (hexadecimal)
     <ol class="answers">
-        <li class="wrong"><input type="radio" name="q1" id="q1a1"/> <label for="q1a1">li recicivosomucireci</label><div class="comment">No! What is it in hexadecimal?</div></li>
-        <li class="correct"><input type="radio" name="q1" id="q1a2"/> <label for="q1a2">li feireireivaifeipafei</label></li>
-        <li class="wrong"><input type="radio" name="q1" id="q1a3"/> <label for="q1a3">la .bifbib</label></li>
-        <li class="wrong"><input type="radio" name="q1" id="q1a4"/> <label for="q1a4">na namcu</label><div class="comment">It is a number in base 16.</div></li>
+        <li class="wrong"><input type="radio" name="q1" id="q1a1"/> <label for="q1a1">lo broda</label></li>
+        <li class="wrong"><input type="radio" name="q1" id="q1a2"/> <label for="q1a2">li recicivosomucireci</label><div class="comment">No! What is it in hexadecimal?</div></li>
+        <li class="correct"><input type="radio" name="q1" id="q1a3"/> <label for="q1a3">li feireireivaifeipafei</label></li>
+        <li class="wrong"><input type="radio" name="q1" id="q1a4"/> <label for="q1a4">la .bifbib</label></li>
     </ol>
 </li>
 <li class="question">23
     <ol class="answers">
         <li class="wrong"><input type="radio" name="q2" id="q2a1"/> <label for="q2a1">li soci</label></li>
-        <li class="correct"><input type="radio" name="q2" id="q2a2"/> <label for="q2a2">li reci</label></li>
-        <li class="wrong"><input type="radio" name="q2" id="q2a3"/> <label for="q2a3">li pano</label></li>
+        <li class="wrong"><input type="radio" name="q2" id="q2a2"/> <label for="q2a2">23</label></li>
+        <li class="correct"><input type="radio" name="q2" id="q2a3"/> <label for="q2a3">li reci</label></li>
         <li class="wrong"><input type="radio" name="q2" id="q2a4"/> <label for="q2a4">la tutri</label></li>
     </ol>
 </li>
@@ -71,17 +159,17 @@
 <ol class="testquestions">
 <li class="question">broda
     <ol class="answers">
-        <li class="wrong"><input type="radio" name="q3" id="q3a1"/> <label for="q3a1">walk</label></li>
-        <li class="wrong"><input type="radio" name="q3" id="q3a2"/> <label for="q3a2">read</label></li>
-        <li class="correct"><input type="radio" name="q3" id="q3a3"/> <label for="q3a3">gismu variable</label></li>
-        <li class="wrong"><input type="radio" name="q3" id="q3a4"/> <label for="q3a4">sleep</label></li>
+        <li class="wrong"><input type="radio" name="q3" id="q3a1"/> <label for="q3a1">go</label></li>
+        <li class="correct"><input type="radio" name="q3" id="q3a2"/> <label for="q3a2">gismu variable</label></li>
+        <li class="wrong"><input type="radio" name="q3" id="q3a3"/> <label for="q3a3">read</label></li>
+        <li class="wrong"><input type="radio" name="q3" id="q3a4"/> <label for="q3a4">run</label></li>
     </ol>
 </li>
 <li class="question">cusku
     <ol class="answers">
-        <li class="wrong"><input type="radio" name="q4" id="q4a1"/> <label for="q4a1">walk</label></li>
+        <li class="wrong"><input type="radio" name="q4" id="q4a1"/> <label for="q4a1">greet</label></li>
         <li class="correct"><input type="radio" name="q4" id="q4a2"/> <label for="q4a2">express</label></li>
-        <li class="wrong"><input type="radio" name="q4" id="q4a3"/> <label for="q4a3">greet</label></li>
+        <li class="wrong"><input type="radio" name="q4" id="q4a3"/> <label for="q4a3">walk</label></li>
     </ol>
 </li>
 </ol>
@@ -91,18 +179,18 @@
 <ol class="testquestions">
 <li class="question">lo broda ____ barda
     <ol class="answers">
-        <li class="wrong"><input type="radio" name="q5" id="q5a1"/> <label for="q5a1">fa'o</label></li>
+        <li class="wrong"><input type="radio" name="q5" id="q5a1"/> <label for="q5a1">be'o</label></li>
         <li class="wrong"><input type="radio" name="q5" id="q5a2"/> <label for="q5a2">vau</label></li>
-        <li class="correct"><input type="radio" name="q5" id="q5a3"/> <label for="q5a3">ku</label></li>
-        <li class="wrong"><input type="radio" name="q5" id="q5a4"/> <label for="q5a4">kei</label></li>
+        <li class="correct"><input type="radio" name="q5" id="q5a3"/> <label for="q5a3">cu</label></li>
+        <li class="wrong"><input type="radio" name="q5" id="q5a4"/> <label for="q5a4">fa'o</label></li>
     </ol>
 </li>
 <li class="question">viska fa lo mamta be la timos ____ lo mi patfu
     <ol class="answers">
-        <li class="wrong"><input type="radio" name="q6" id="q6a1"/> <label for="q6a1">va'o</label></li>
-        <li class="wrong"><input type="radio" name="q6" id="q6a2"/> <label for="q6a2">vau</label></li>
-        <li class="wrong"><input type="radio" name="q6" id="q6a3"/> <label for="q6a3">.i</label></li>
-        <li class="correct"><input type="radio" name="q6" id="q6a4"/> <label for="q6a4">ku</label></li>
+        <li class="wrong"><input type="radio" name="q6" id="q6a1"/> <label for="q6a1">dau</label></li>
+        <li class="correct"><input type="radio" name="q6" id="q6a2"/> <label for="q6a2">ku</label></li>
+        <li class="wrong"><input type="radio" name="q6" id="q6a3"/> <label for="q6a3">va'o</label></li>
+        <li class="wrong"><input type="radio" name="q6" id="q6a4"/> <label for="q6a4">vau</label></li>
     </ol>
 </li>
 </ol>
@@ -126,5 +214,10 @@
 
 </ol>
 
+<div>
+  <input type="button" onclick="grade();" value="Grade" /> <label for="sa"><input type="checkbox" id="sa" />Show correct answers</label>
+  <br/>
+  <span>Your score: <b id="results">Ungraded</b></span>
+</div>
 </body>
 </html>
